@@ -1,9 +1,15 @@
 import numpy as np
 import pandas as pd
+import sys
 from collections import deque
 # data scraping packages
 from bs4 import BeautifulSoup
-from  urllib.request import urlopen,  Request
+# use different package depending on python version
+version = int(sys.version[0])
+if version == 3:
+    from  urllib.request import urlopen,  Request
+else:
+    from urllib2 import urlopen, Request
 
 # the symbols of S&P500 and S&P 100 are ^GSPC and ^OEX
 def get_sap_symbols(name='sap500'):
