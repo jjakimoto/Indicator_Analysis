@@ -64,9 +64,13 @@ def get_data(symbol, st, end):
     url = urlopen('http://chart.finance.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=d&ignore=.csv' \
                            % (symbol, ms, ds, ys, me, de, ye))
     history = url.read()
-    history = str(history).split('\\n')
-    # get rid of 'b'
-    keys = history[0].split("'")[1]
+    if version == 3:
+        history = str(history).split('\\n')
+        # get rid of 'b'
+        keys = history[0].split("'")[1]
+    else:
+        history = str(history).split('\n')
+        keys = history[0]
     keys = keys.split(',')[1:]
     # convert fetched data into the DataFrame
     values = deque()
@@ -118,6 +122,7 @@ def get_data_list_key(symbols, st, end, key='Open'):
         except:
             fail_symbols.append(s)
             pass
-    print('we cound not fetch data from the following companies')
-    print(fail_symbols)
+    if len(fail_symbols) > 0:
+        print('we cound not fetch data from the following companies')
+        print(fail_symbols)
     return pd.DataFrame(np.array(values).T, index = date, columns=sucess_symbols)
