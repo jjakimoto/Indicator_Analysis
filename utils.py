@@ -34,7 +34,7 @@ def get_sap_symbols(name='sap500'):
         col = row.findAll('td')
         if len(col) > 0:
             symbol = col[0].string.replace('.', '-')
-            symbols.append(symbol)
+            symbols.append(str(symbol))
     return symbols
 
 def date_parse(date):
