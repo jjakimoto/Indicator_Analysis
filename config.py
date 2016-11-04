@@ -4,7 +4,8 @@ import time
 # local libarary
 from model import MLP
     
-def random_search(train_input, train_target, test_input, test_target, n_iter=200, data_name='sap500'):
+def random_search(train_input, train_target, test_input, test_target,
+        save_path, device='/gpu:0', n_iter=200, data_name='sap500'):
     """Randome Search for Hyper parameter of the model
     
     Args:
@@ -22,14 +23,14 @@ def random_search(train_input, train_target, test_input, test_target, n_iter=200
     st = time.time()
     for i in range(n_iter):
         try:
-            random_conf = generate_config(conf, n_stock)
+            random_conf = generate_config(conf, n_stock, device, save_path)
             mlp = MLP(random_conf)
             print('number:', i)
             mlp.training(train_input, train_target)
             loss = mlp.accuracy(test_input, test_target)
             print('loss:', loss)
-            if loss < best_loss:
-                mlp.save()
+            if best_loss > loss:
+                # mlp.save()
                 best_loss = loss
                 best_conf = random_conf
                 print(best_conf)

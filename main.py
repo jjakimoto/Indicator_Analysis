@@ -29,7 +29,8 @@ def main():
     test_input = input_data.loc[(input_data.index >= test_st) & (input_data.index <= test_end)]
     test_target = target_data.loc[(target_data.index >= test_st) & (target_data.index <= test_end)]
 
-    best_conf = random_search(train_input, train_target, test_input, test_target)
+    best_conf = random_search(train_input, train_target, test_input, test_target, 
+                              '/path/to/your/save/directory', '/cpu:0')
     print("best config:")
     print(best_conf)
     
