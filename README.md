@@ -15,7 +15,7 @@ target_data = utils.get_data('^GSPC', start_date, end_date)['Open']
 
 For Regularization, used [Batch Normalization](https://arxiv.org/pdf/1502.03167v3.pdf) and [Drop Out](https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf).
 
-To determine which regularization is used and hyper parameters, you can use [Random Search for Hyper-Parameter Optimization](http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf).
+To determine which regularization and hyper parameters, you can use [Random Search for Hyper-Parameter Optimization](http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf).
 ```
 import config
 best_conf = config.random_search(train_input, train_target, test_input, test_target, '/path/to/your/save/directory', '/gpu:0')
