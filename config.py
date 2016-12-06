@@ -4,12 +4,12 @@ import time
 # local libarary
 from model import MLP
     
-def random_search(train_input, train_target, test_input, test_target,
-        save_path, device='/gpu:0', n_iter=200, data_name='sap500'):
+def random_search(train_input, train_target, valid_input, valid_target,
+        save_path, device='/gpu:0', n_iter=100, data_name='sap500'):
     """Randome Search for Hyper parameter of the model
     
     Args:
-        train(test)_input, train(test)_target (DataFrame): data to train and test of network
+        train(valid)_input, train(valid)_target (DataFrame): data to train and validation of network
         n_inter(int): the number to iterate for parameter search
         data_name(str): the name of target data
     """
@@ -27,17 +27,17 @@ def random_search(train_input, train_target, test_input, test_target,
             mlp = MLP(random_conf)
             print('number:', i)
             mlp.training(train_input, train_target)
-            loss = mlp.accuracy(test_input, test_target)
+            loss = mlp.accuracy(valid_input, valid_target)
             print('loss:', loss)
             if best_loss > loss:
                 # mlp.save()
                 best_loss = loss
                 best_conf = random_conf
                 print(best_conf)
-                prediction = mlp.predict(test_input)
+                prediction = mlp.predict(valid_input)
                 prediction.to_csv("%s_%d.csv" % (data_name, len(chosen_symbols)))
                 plt.plot(prediction, label='prediction')
-                plt.plot(test_target, label='target')
+                plt.plot(valid_target, label='target')
                 plt.title('%s_%d' % (data_name, len(chosen_symbols)))
                 plt.legend()
                 plt.savefig('%s_%d.png' % (data_name, len(chosen_symbols)))
@@ -82,7 +82,7 @@ def generate_config(conf, n_stock, device='/cpu:0', save_path='/path/to/your/sav
     random_conf['save_path'] = save_path
     random_conf['n_stock'] = n_stock
     random_conf['n_batch'] = 64
-    random_conf['n_epochs'] = 1000
+    random_conf['n_epochs'] = 500
     random_conf['is_load'] = False
     return random_conf
 

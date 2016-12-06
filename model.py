@@ -81,7 +81,7 @@ class MLP(object):
                 loss = self.sess.run(self.loss, feed_dict={self.input_: stock_data,
                                                            self.target: target_data,
                                                           K.learning_phase(): 0})
-                print ('loss_test:', loss)
+                print ('loss:', loss)
             
             
         print ("finished training")
