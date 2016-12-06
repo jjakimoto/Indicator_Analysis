@@ -4,12 +4,8 @@ import sys
 from collections import deque
 # data scraping packages
 from bs4 import BeautifulSoup
-# use different package depending on python version
-version = int(sys.version[0])
-if version == 3:
-    from  urllib.request import urlopen,  Request
-else:
-    from urllib2 import urlopen, Request
+# satisfy compatilibty between python2 and python3
+from six.moves.urllib.request import urlopen
 
 # the symbols of S&P500 and S&P 100 are ^GSPC and ^OEX
 def get_sap_symbols(name='sap500'):
@@ -25,7 +21,6 @@ def get_sap_symbols(name='sap500'):
     else:
         raise NameError('invalid input: name should be "sap500" or "sap100"')
     # fetch data from yahoo finance
-    req = Request(site)
     page = urlopen(site)
     soup = BeautifulSoup(page, 'html.parser')
     table = soup.find('table', {'class': 'wikitable sortable'})
