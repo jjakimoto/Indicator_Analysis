@@ -121,3 +121,6 @@ def get_data_list_key(symbols, st, end, key='Open'):
         print('we cound not fetch data from the following companies')
         print(fail_symbols)
     return pd.DataFrame(np.array(values).T, index = date, columns=sucess_symbols)
+
+def testscore(prediction, target):
+    return np.mean(np.abs(prediction - target) / target)
