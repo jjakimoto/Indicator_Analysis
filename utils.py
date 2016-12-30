@@ -6,7 +6,7 @@ from collections import deque
 from bs4 import BeautifulSoup
 # satisfy compatilibty between python2 and python3
 from six.moves.urllib.request import urlopen
-version = sys.version[0]
+version = int(sys.version[0])
 # the symbols of S&P500 and S&P 100 are ^GSPC and ^OEX
 def get_sap_symbols(name='sap500'):
     """Get ticker symbols constituting S&P
